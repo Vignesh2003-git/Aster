@@ -23,6 +23,8 @@ def get_sales_invoice():
     si.grand_total,
     si.rounding_adjustment,
     si_item.item_code,
+    si_item.item_group,
+    si_item.gst_hsn_code,
     si_item.qty,
     si_item.rate,
     si_item.description,
@@ -32,12 +34,15 @@ def get_sales_invoice():
     si.grand_total AS total_amount,
     si.rounded_total,
     si.status,
-    si.total_taxes_and_charges
+    si.total_taxes_and_charges,
+    si.po_no,
+    si.po_date
 FROM
     `tabSales Invoice` si
 INNER JOIN
     `tabSales Invoice Item` si_item ON si.name = si_item.parent
-
+WHERE
+    si.docstatus = 1
 
 """
 
@@ -71,6 +76,8 @@ INNER JOIN
                 "saleslist":
                 [{
                     'invoicenumber': invoice['sales_invoice'],
+                    'BasicPurchaseOrderNo': invoice['po_no'],
+                    'BasicOrderDate': invoice['po_date'],
                     'invoicedate': invoice['posting_date'].strftime('%d-%m-%Y'),
                     "narration": "",
                     'customername': invoice['customer'],
@@ -158,7 +165,7 @@ INNER JOIN
                     "invoicenumber": '',
                     "product": item['item_name'],
                     "productdescription": item['item_code'],
-                    "parent": "",
+                    "parent": item['item_group'],
                     "partno": "",
                     "productgodown": item['warehouse'],
                     "unit": item['uom'],
@@ -166,7 +173,7 @@ INNER JOIN
                     "productqty": item['qty'],
                     "productAltqty": "",
                     "productrate": item['rate'],
-                    "producthsn": "",
+                    "producthsn": item['gst_hsn_code'],
                     "productigstpercentage": "",
                     "productcgstpercentage": "",
                     "productsgstpercentage": "",
@@ -260,7 +267,11 @@ INNER JOIN
 
             
             # return susales_invoice_list.values()
-    return sales_invoice_list.values()
+    # return sales_invoice_list.values()
+    return {
+        "message": "Documents created",
+        "created": sales_invoice_list
+    }
 
 @frappe.whitelist(allow_guest=True)
 def get_purchase_invoice():
