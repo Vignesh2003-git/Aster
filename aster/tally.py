@@ -267,11 +267,11 @@ WHERE
 
             
             # return susales_invoice_list.values()
-    # return sales_invoice_list.values()
-    return {
-        "message": "Documents created",
-        "created": sales_invoice_list
-    }
+    return sales_invoice_list.values()
+    # return {
+    #     "message": "Documents created",
+    #     "created": sales_invoice_list
+    # }
 
 @frappe.whitelist(allow_guest=True)
 def get_purchase_invoice():
