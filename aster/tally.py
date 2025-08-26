@@ -14,6 +14,7 @@ def get_sales_invoice():
     SELECT
     si.name AS sales_invoice,
     si.customer,
+    c.customer_type,
     si.address_display,
     si.shipping_address,
     si.shipping_address_name,
@@ -41,6 +42,8 @@ FROM
     `tabSales Invoice` si
 INNER JOIN
     `tabSales Invoice Item` si_item ON si.name = si_item.parent
+INNER JOIN
+    `tabCustomer` c ON si.customer = c.name
 WHERE
     si.docstatus = 1
 
@@ -76,21 +79,26 @@ WHERE
                 "saleslist":
                 [{
                     'invoicenumber': invoice['sales_invoice'],
-                    'BasicPurchaseOrderNo': invoice['po_no'],
-                    'BasicOrderDate': invoice['po_date'],
+                    # 'BasicPurchaseOrderNo': invoice['po_no'],
+                    # 'BasicOrderDate': invoice['po_date'],
                     'invoicedate': invoice['posting_date'].strftime('%d-%m-%Y'),
                     "narration": "",
                     'customername': invoice['customer'],
+                    "parent":invoice['customer_type']
                     "vchtype": "GST Sales",
                     "invoicemode": "Invoice Voucher View",
                     "reference": "2074/22-23",
                     "salesledger": "SGST Sales",
                     "vchclass": "Local Sales",
-                    "deliverynoteno": "",
-                    "deliverynotedate": "",
-                    "dispatchdocno": "",
-                    "dipatchthrough": "",
-                    "destination": "",
+                    "deliverynoteno": "12345",
+                    "deliverynotedate": "27-09-2022",
+                    "dispatchdocno": "1345",
+                    "dipatchthrough": "DAP",
+                    "destination": "Chennai",
+                    "Carrier Name/Agent":"Ram",
+                    "Bill of Lading/LR-RR No":"65432",
+                    "Date":"27-09-2022",
+                    "Motor Vehicle No":"",
                     "lrrnumber": "",
                     "lrrdate": "",
                     "vehiclenumber": "",#invoice['vehicle_no'],
