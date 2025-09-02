@@ -85,8 +85,7 @@ WHERE
                 "tallyname": "",
                 "tallyserialno": "123456",
                 "requesttype": "SALES",
-                "saleslist":
-                [{
+                "saleslist":[{
                     'invoicenumber': invoice['sales_invoice'],
                     # 'BasicPurchaseOrderNo': invoice['po_no'],
                     # 'BasicOrderDate': invoice['po_date'],
