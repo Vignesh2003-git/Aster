@@ -85,30 +85,30 @@ WHERE
                 "tallyname": "",
                 "tallyserialno": "123456",
                 "requesttype": "SALES",
-                "saleslist":[{
+                "saleslist": [{
                     'invoicenumber': invoice['sales_invoice'],
                     # 'BasicPurchaseOrderNo': invoice['po_no'],
                     # 'BasicOrderDate': invoice['po_date'],
                     'invoicedate': invoice['posting_date'].strftime('%d-%m-%Y'),
                     "narration": "",
                     'customername': invoice['customer'],
-                    "parent":invoice['customer_type']
+                    "parent": invoice['customer_type'],   # <-- comma added
                     "vchtype": "GST Sales",
                     "invoicemode": "Invoice Voucher View",
                     "reference": "2074/22-23",
                     "salesledger": "SGST Sales",
                     "vchclass": "Local Sales",
-                    "deliverynoteno":invoice['custom_delivery_note_'],
-                    "deliverynotedate":invoice['custom_delivery_note_date'].strftime('%d-%m-%Y') ,
+                    "deliverynoteno": invoice['custom_delivery_note_'],
+                    "deliverynotedate": invoice['custom_delivery_note_date'].strftime('%d-%m-%Y'),
                     "dispatchdocno": invoice['custom_dispatch_doc_no'],
-                    "dipatchthrough":invoice['custom_dispatched_through'],
-                    "destination":invoice['custom_destination'],
-                    "EICheckPost":invoice['custom_carrier_nameagent'],
-                    "BillofLadingNo":invoice['custom_bill_of_landinglrrr_no'],
-                    "BillofLadingDate":invoice['custom_date'].strftime('%d-%m-%Y'),
+                    "dipatchthrough": invoice['custom_dispatched_through'],
+                    "destination": invoice['custom_destination'],
+                    "EICheckPost": invoice['custom_carrier_nameagent'],
+                    "BillofLadingNo": invoice['custom_bill_of_landinglrrr_no'],
+                    "BillofLadingDate": invoice['custom_date'].strftime('%d-%m-%Y'),
                     "lrrnumber": "",
                     "lrrdate": "",
-                    "vehiclenumber":invoice['custom_motor_vehicle_no'],
+                    "vehiclenumber": invoice['custom_motor_vehicle_no'],
                     "ordernumber": invoice['po_no'],
                     "orderdate": "27-09-2022",
                     "modeofpayment": "",
@@ -118,12 +118,12 @@ WHERE
                     "buyeraddress1": invoice['address_display'],
                     "buyeraddress2": "",
                     "buyeraddress3": "",
-                    "buyeraddress4": '',#invoice['address_display'].split("<br>")[3],
+                    "buyeraddress4": '', # invoice['address_display'].split("<br>")[3],
                     "buyeraddress5": "",
                     "country": "",
                     "buyerstate": "",
                     "placeofsupply": "",
-                    "buyergstinnumber": "",#invoice['billing_address_gstin'],
+                    "buyergstinnumber": "", # invoice['billing_address_gstin'],
                     "deliveryname": invoice['shipping_address_name'],
                     "deliveryaddress1": invoice['shipping_address'],
                     "deliveryaddress2": "",
@@ -131,18 +131,18 @@ WHERE
                     "deliveryaddress4": " ",
                     "deliveryaddress5": "",
                     "consigneestate": "",
-                    "consigneegstinnumber": "",#invoice['billing_address_gstin'],
+                    "consigneegstinnumber": "", # invoice['billing_address_gstin'],
                     "subvalue": invoice['grand_total'],
                     "roundoffledger": "Rounding Off",
-                    "roundoffamount": 0,#invoice['rounding_adjustment'],
+                    "roundoffamount": 0, # invoice['rounding_adjustment'],
                     "invoicevalue": invoice['grand_total'],
-                        #invoice['rounded_total'],
-                    "irn": "",#invoice['irn'],
-                    "ackno":"",#invoice['acknowledgement_number'],
-                    "ackdate": "",#invoice['acknowledged_on'],
-                    "SignedInvoice": "",#invoice['signed_invoice'],
-                    "SignedQRCode":"",#invoice['signed_qr_code'],
-                    "ewaybillno": "",#invoice['ewaybill'],
+                    # invoice['rounded_total'],
+                    "irn": "", # invoice['irn'],
+                    "ackno": "", # invoice['acknowledgement_number'],
+                    "ackdate": "", # invoice['acknowledged_on'],
+                    "SignedInvoice": "", # invoice['signed_invoice'],
+                    "SignedQRCode": "", # invoice['signed_qr_code'],
+                    "ewaybillno": "", # invoice['ewaybill'],
                     "ewaybillnodate": "",
                     # 'grand_total': invoice['grand_total'],
                     # 'outstanding_amount': invoice['outstanding_amount'],
@@ -153,22 +153,19 @@ WHERE
                             "additionalledger": "CGST Output",
                             "parent": "",
                             "rateofpercentage": "",
-                            "additionalledgervalue": round(invoice['total_taxes_and_charges']/2,2)
-                            # If invoice['tax_category']=='In-State' :
-                            # "additionalledgervalue":   invoice['tax_category']#round(invoice['total_taxes_and_charges']/2,2) if invoice['tax_category'] == 'In-State' else ''
-                            # else:
-                            #     "additionalledgervalue": ''
+                            "additionalledgervalue": round(invoice['total_taxes_and_charges']/2, 2)
                         },
                         {
                             "invoicenumber": invoice['sales_invoice'],
                             "additionalledger": "SGST Output",
                             "parent": "",
                             "rateofpercentage": "",
-                            "additionalledgervalue": round(invoice['total_taxes_and_charges']/2,2)
+                            "additionalledgervalue": round(invoice['total_taxes_and_charges']/2, 2)
                         }
                     ]
-                }
-                ]}
+                }]
+            }
+
 
             query_items ="SELECT * FROM `tabSales Invoice Item` WHERE parent = %s order by idx"
                 
